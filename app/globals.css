@@ -219,3 +219,9 @@
 .w-md-editor-toolbar {
   padding: 10px !important;
 }
+
+/* add global selection  */
+::selection {
+  background-color: rgba(3, 195, 236,0.5);
+  color: white;
+}

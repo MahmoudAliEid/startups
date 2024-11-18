@@ -6,7 +6,18 @@ const Navbar = async () => {
   const session = await auth();
 
   return (
-    <header className="bg-white px-5 py-3 shadow-sm font-work-sans">
+    <header
+      className="bg-white px-5 py-3 shadow-sm font-work-sans"
+      style={{
+        position: "sticky",
+        top: 0,
+        zIndex: 1000,
+        backdropFilter: "blur(6px)",
+        boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+        background: "rgba(255, 255, 255, 0.9)",
+        transition: "backdrop-filter 0.2s ease-in-out",
+      }}
+    >
       <nav className="flex justify-between items-center">
         <Link href="/">
           <Image src="/logo.png" alt="logo" width={144} height={30} />
@@ -27,6 +38,15 @@ const Navbar = async () => {
                   <span>Log Out</span>
                 </button>
               </form>
+              <div>
+                <Image
+                  src={session.user.image || "/default-user.png"}
+                  alt="user"
+                  width={38}
+                  height={38}
+                  className="avatar"
+                />
+              </div>
               <Link href={`user/${session?.user?.id}`}>
                 <span>{session?.user?.name}</span>
               </Link>

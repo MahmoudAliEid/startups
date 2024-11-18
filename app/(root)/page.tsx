@@ -1,6 +1,8 @@
 import Heading from "@/components/Heading";
 import SearchForm from "../../components/SearchForm";
-import StartupCard from "@/components/StartupCard";
+import StartupCard, { StartupsCardType } from "@/components/StartupCard";
+import { client } from "@/sanity/lib/client";
+import { STARTUP_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home({
   searchParams,
@@ -9,36 +11,38 @@ export default async function Home({
 }) {
   const query = (await searchParams).query;
 
-  const posts = [
-    {
-      title: "How to build a startup",
-      description: "Learn how to build a startup from scratch",
-      _id: 1,
-      author: {
-        name: "John Doe",
-        image: "https://randomuser.me/api/portraits/men/1.jpg",
-        _id: 1,
-      },
-      category: "Tech",
-      _createdAt: new Date(),
-      views: 100,
-      image: "https://randomuser.me/api/portraits/men/1.jpg",
-    },
-    {
-      title: "How to build a startup",
-      description: "Learn how to build a startup from scratch",
-      _id: 2,
-      author: {
-        name: "Mahmoud",
-        image: "https://randomuser.me/api/portraits/men/10.jpg",
-        _id: 2,
-      },
-      category: "Business",
-      _createdAt: new Date(),
-      views: 190,
-      image: "https://randomuser.me/api/portraits/men/10.jpg",
-    },
-  ];
+  const posts = await client.fetch(STARTUP_QUERY);
+
+  // const posts = [
+  //   {
+  //     title: "How to build a startup",
+  //     description: "Learn how to build a startup from scratch",
+  //     _id: 1,
+  //     author: {
+  //       name: "John Doe",
+  //       image: "https://randomuser.me/api/portraits/men/1.jpg",
+  //       _id: 1,
+  //     },
+  //     category: "Tech",
+  //     _createdAt: new Date(),
+  //     views: 100,
+  //     image: "https://randomuser.me/api/portraits/men/1.jpg",
+  //   },
+  //   {
+  //     title: "How to build a startup",
+  //     description: "Learn how to build a startup from scratch",
+  //     _id: 2,
+  //     author: {
+  //       name: "Mahmoud",
+  //       image: "https://randomuser.me/api/portraits/men/10.jpg",
+  //       _id: 2,
+  //     },
+  //     category: "Business",
+  //     _createdAt: new Date(),
+  //     views: 190,
+  //     image: "https://randomuser.me/api/portraits/men/10.jpg",
+  //   },
+  // ];
 
   return (
     <>
@@ -61,7 +65,9 @@ export default async function Home({
         )}
         <ul className="card_grid mt-7">
           {posts?.length > 0 ? (
-            posts.map((post) => <StartupCard key={post._id} post={post} />)
+            posts.map((post: StartupsCardType) => (
+              <StartupCard key={post._id} post={post} />
+            ))
           ) : (
             <p className="no-result ">No posts found</p>
           )}
