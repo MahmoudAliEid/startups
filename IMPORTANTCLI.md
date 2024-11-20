@@ -13,7 +13,7 @@ npx sanity@latest typegen generate
 ### Commands for auto generate
 
 ```shell
- "predev": "npm run typegen",
+    "predev": "npm run typegen",
     "prebuild": "npm run typegen",
     "typegen": "sanity schema extract --path=./sanity/extract.json && sanity typegen generate"
 ```

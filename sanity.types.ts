@@ -170,3 +170,109 @@ export type Markdown = string;
 
 export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | SanityAssetSourceData | Startup | Slug | Author | Markdown;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./sanity/lib/queries.ts
+// Variable: STARTUP_QUERY
+// Query: *[_type == "startup" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] | order(_createdAt desc) {    _id,    title,    image,    slug,    description,    category,    _createdAt,    _type,    _updatedAt,    _rev,    "author": author->{      _id,       name,       image,       bio    },    views  }
+export type STARTUP_QUERYResult = Array<{
+  _id: string;
+  title: null;
+  image: string | null;
+  slug: null;
+  description: null;
+  category: null;
+  _createdAt: string;
+  _type: "author";
+  _updatedAt: string;
+  _rev: string;
+  author: null;
+  views: null;
+} | {
+  _id: string;
+  title: string | null;
+  image: null;
+  slug: null;
+  description: string | null;
+  category: null;
+  _createdAt: string;
+  _type: "sanity.fileAsset";
+  _updatedAt: string;
+  _rev: string;
+  author: null;
+  views: null;
+} | {
+  _id: string;
+  title: string | null;
+  image: null;
+  slug: null;
+  description: string | null;
+  category: null;
+  _createdAt: string;
+  _type: "sanity.imageAsset";
+  _updatedAt: string;
+  _rev: string;
+  author: null;
+  views: null;
+} | {
+  _id: string;
+  title: string | null;
+  image: string | null;
+  slug: Slug | null;
+  description: string | null;
+  category: string | null;
+  _createdAt: string;
+  _type: "startup";
+  _updatedAt: string;
+  _rev: string;
+  author: {
+    _id: string;
+    name: string | null;
+    image: string | null;
+    bio: string | null;
+  } | null;
+  views: number | null;
+}>;
+// Variable: FIND_BY_ID_QUERY
+// Query: *[_type == "startup" && _id == $id][0] {    _id,    title,    image,    slug,    description,    category,    _createdAt,    "author": author->{      _id,       name,       image,       bio    },    views,    pitch  }
+export type FIND_BY_ID_QUERYResult = {
+  _id: string;
+  title: string | null;
+  image: string | null;
+  slug: Slug | null;
+  description: string | null;
+  category: string | null;
+  _createdAt: string;
+  author: {
+    _id: string;
+    name: string | null;
+    image: string | null;
+    bio: string | null;
+  } | null;
+  views: number | null;
+  pitch: string | null;
+} | null;
+// Variable: STARTUP_VIEW_QUERY
+// Query: *[_type == "startup" && _id == $id][0] {    _id,    views  }
+export type STARTUP_VIEW_QUERYResult = {
+  _id: string;
+  views: number | null;
+} | null;
+// Variable: Author_BY_GITHUB_QUERY
+// Query: *[_type == "author" && _id == $id][0] {    _id,    id,    name,    image,    bio  }
+export type Author_BY_GITHUB_QUERYResult = {
+  _id: string;
+  id: number | null;
+  name: string | null;
+  image: string | null;
+  bio: string | null;
+} | null;
+
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    "\n  *[_type == \"startup\" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] | order(_createdAt desc) {\n    _id,\n    title,\n    image,\n    slug,\n    description,\n    category,\n    _createdAt,\n    _type,\n    _updatedAt,\n    _rev,\n    \"author\": author->{\n      _id, \n      name, \n      image, \n      bio\n    },\n    views\n  }\n": STARTUP_QUERYResult;
+    "\n  *[_type == \"startup\" && _id == $id][0] {\n    _id,\n    title,\n    image,\n    slug,\n    description,\n    category,\n    _createdAt,\n    \"author\": author->{\n      _id, \n      name, \n      image, \n      bio\n    },\n    views,\n    pitch\n  }\n": FIND_BY_ID_QUERYResult;
+    "\n  *[_type == \"startup\" && _id == $id][0] {\n    _id,\n    views\n  }\n": STARTUP_VIEW_QUERYResult;
+    "\n  *[_type == \"author\" && _id == $id][0] {\n    _id,\n    id,\n    name,\n    image,\n    bio\n  }\n": Author_BY_GITHUB_QUERYResult;
+  }
+}

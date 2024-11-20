@@ -1,11 +1,25 @@
-import { dateFormat } from "@/lib/utils";
-import { EyeIcon } from "lucide-react";
+// ** Next Components
 import Image from "next/image";
 import Link from "next/link";
+
+// ** Third Party Components
+import { EyeIcon } from "lucide-react";
 import { Button } from "./ui/button";
+
+// ** Sanity Types
 import { Startup, Author } from "@/sanity.types";
 
-export type StartupsCardType = Omit<Startup, "author"> & { author?: Author };
+// ** Utils
+import { dateFormat } from "@/lib/utils";
+
+// ** Types
+export type StartupsCardType = Omit<Startup, "author"> & {
+  author?: Author | null;
+  title?: string | null;
+  description?: string | null;
+  category?: string | null;
+  views?: number | null;
+};
 
 const StartupCard = ({ post }: { post: StartupsCardType }) => {
   const {
@@ -30,26 +44,30 @@ const StartupCard = ({ post }: { post: StartupsCardType }) => {
 
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
-          <Link href={`/user/${author?._id}`}>
-            <p className="text-16-medium  line-clamp-1">{author?.name}</p>
-          </Link>
+          {author && (
+            <Link href={`/user/${author._id}`}>
+              <p className="text-16-medium  line-clamp-1">{author.name}</p>
+            </Link>
+          )}
           <Link href={`/startup/${_id}`}>
             <h3 className="text-26-semibold line-clamp-2">{title}</h3>
           </Link>
         </div>
 
-        <Link href={`/user/${author?._id}`}>
-          <Image
-            src={author?.image || "/default-user.png"}
-            alt="user"
-            width={48}
-            height={48}
-            className="rounded-full"
-          />
-        </Link>
+        {author && (
+          <Link href={`/user/${author._id}`}>
+            <Image
+              src={author.image || "/default-user.png"}
+              alt="user"
+              width={48}
+              height={48}
+              className="rounded-full"
+            />
+          </Link>
+        )}
       </div>
 
-      <Link href={`/user/${_id}`}>
+      <Link href={`/startup/${_id}`}>
         <p className="startup-card_des">{description}</p>
         <Image
           src={image || "/default-image.png"}

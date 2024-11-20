@@ -5,7 +5,7 @@ const Heading = ({
   textRight,
 }: {
   textLeft: string;
-  textRight: string;
+  textRight?: string;
 }) => {
   return (
     <h1 className="heading">

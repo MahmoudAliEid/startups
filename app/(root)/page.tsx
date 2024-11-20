@@ -1,7 +1,11 @@
+// ** Custom Component
+import { auth } from "@/auth";
 import Heading from "@/components/Heading";
-import SearchForm from "../../components/SearchForm";
+import SearchForm from "@/components/SearchForm";
 import StartupCard, { StartupsCardType } from "@/components/StartupCard";
-import { client } from "@/sanity/lib/client";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+
+// ** Queries
 import { STARTUP_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home({
@@ -10,39 +14,13 @@ export default async function Home({
   searchParams: Promise<{ query: string }>;
 }) {
   const query = (await searchParams).query;
+  const params = { search: query || null };
 
-  const posts = await client.fetch(STARTUP_QUERY);
+  const { data: posts } = await sanityFetch({ query: STARTUP_QUERY, params });
 
-  // const posts = [
-  //   {
-  //     title: "How to build a startup",
-  //     description: "Learn how to build a startup from scratch",
-  //     _id: 1,
-  //     author: {
-  //       name: "John Doe",
-  //       image: "https://randomuser.me/api/portraits/men/1.jpg",
-  //       _id: 1,
-  //     },
-  //     category: "Tech",
-  //     _createdAt: new Date(),
-  //     views: 100,
-  //     image: "https://randomuser.me/api/portraits/men/1.jpg",
-  //   },
-  //   {
-  //     title: "How to build a startup",
-  //     description: "Learn how to build a startup from scratch",
-  //     _id: 2,
-  //     author: {
-  //       name: "Mahmoud",
-  //       image: "https://randomuser.me/api/portraits/men/10.jpg",
-  //       _id: 2,
-  //     },
-  //     category: "Business",
-  //     _createdAt: new Date(),
-  //     views: 190,
-  //     image: "https://randomuser.me/api/portraits/men/10.jpg",
-  //   },
-  // ];
+  const session = await auth();
+
+  console.log(session?.id);
 
   return (
     <>
@@ -57,22 +35,25 @@ export default async function Home({
         </p>
         <SearchForm query={query} />
       </section>
+
       <section className="section_container">
         {query ? (
-          <p className="text-30-semibold">{`You're looking for ${query}`}</p>
+          <p className="text-30-semibold">{`You're looking for "${query}"`}</p>
         ) : (
           <p className="text-30-semibold">Latest Startups</p>
         )}
         <ul className="card_grid mt-7">
-          {posts?.length > 0 ? (
+          {posts.length > 0 ? (
+            // @ts-expect-error: Type of posts is not guaranteed
             posts.map((post: StartupsCardType) => (
               <StartupCard key={post._id} post={post} />
             ))
           ) : (
-            <p className="no-result ">No posts found</p>
+            <p className="no-result">No posts found</p>
           )}
         </ul>
       </section>
+      <SanityLive />
     </>
   );
 }
