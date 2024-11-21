@@ -101,7 +101,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 <StartupCard
                   key={startup._id}
                   post={startup}
-                  href={`/${startup._id}`}
+                  href={`startup/${startup._id}`}
                 />
               ))}
             </ul>
