@@ -58,6 +58,9 @@
   .heading {
     @apply uppercase bg-black px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] max-w-5xl text-center my-5;
   }
+  .editor-heading {
+    @apply uppercase bg-black px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] max-w-full text-center my-5;
+  }
 
   .sub-heading {
     @apply font-medium text-[20px] text-white max-w-2xl text-center break-words;
@@ -132,9 +135,9 @@
   }
 
   /* startupcard */
- .startup-card {
-        @apply bg-white border-[5px] border-black py-6 px-5 rounded-[22px] shadow-200 hover:border-primary transition-all duration-500 hover:shadow-300 hover:bg-primary-100;
-    }
+  .startup-card {
+    @apply bg-white border-[5px] border-black py-6 px-5 rounded-[22px] shadow-200 hover:border-primary transition-all duration-500 hover:shadow-300 hover:bg-primary-100;
+  }
 
   .startup-card_date {
     @apply font-medium text-[16px] bg-primary-100 px-4 py-2 rounded-full group-hover:bg-white-100;
@@ -198,18 +201,23 @@
     @apply font-medium text-[16px] bg-primary-100 px-4 py-2 rounded-full;
   }
 
-  .pattern {
+ .pattern {
     background-image: linear-gradient(
       to right,
       transparent 49.5%,
-      rgba(3, 195, 236, 0.2) 49.5%,
+      rgb(255, 255, 255) 49.5%,
       rgb(255, 255, 255) 50.5%,
       transparent 50.5%
     );
     background-size: 5% 100%;
     background-position: center;
     background-repeat: repeat-x;
+    
   }
+
+
+
+
 
   .tag-tri {
     @apply before:content-[''] before:absolute before:top-2 before:left-2 before:border-t-[10px] before:border-t-black before:border-r-[10px] before:border-r-transparent after:content-[''] after:absolute after:bottom-2 after:right-2 after:border-b-[10px] after:border-b-black after:border-l-[10px] after:border-l-transparent;
@@ -222,6 +230,6 @@
 
 /* add global selection  */
 ::selection {
-  background-color: rgba(3, 195, 236,0.5);
+  background-color: rgba(3, 195, 236, 0.6);
   color: white;
 }

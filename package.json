@@ -18,11 +18,13 @@
     "next": "$next"
   },
   "dependencies": {
+    "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.2",
     "@sanity/client": "^6.22.4",
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^3.64.1",
+    "@sentry/nextjs": "^8.39.0",
     "@tailwindcss/typography": "^0.5.15",
     "@uiw/react-md-editor": "^4.0.4",
     "class-variance-authority": "^0.7.0",

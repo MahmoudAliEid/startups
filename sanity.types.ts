@@ -232,7 +232,7 @@ export type STARTUP_QUERYResult = Array<{
   views: number | null;
 }>;
 // Variable: FIND_BY_ID_QUERY
-// Query: *[_type == "startup" && _id == $id][0] {    _id,    title,    image,    slug,    description,    category,    _createdAt,    "author": author->{      _id,       name,       image,       bio    },    views,    pitch  }
+// Query: *[_type == "startup" && _id == $id][0] {    _id,    title,    image,    slug,    description,    category,    _createdAt,    "author": author->{      _id,       name,       image,       bio,username    },    views,    pitch  }
 export type FIND_BY_ID_QUERYResult = {
   _id: string;
   title: string | null;
@@ -246,6 +246,7 @@ export type FIND_BY_ID_QUERYResult = {
     name: string | null;
     image: string | null;
     bio: string | null;
+    username: string | null;
   } | null;
   views: number | null;
   pitch: string | null;
@@ -257,8 +258,17 @@ export type STARTUP_VIEW_QUERYResult = {
   views: number | null;
 } | null;
 // Variable: Author_BY_GITHUB_QUERY
-// Query: *[_type == "author" && _id == $id][0] {    _id,    id,    name,    image,    bio  }
+// Query: *[_type == "author" && id == $id][0] {    _id,    id,    name,    image,    bio  }
 export type Author_BY_GITHUB_QUERYResult = {
+  _id: string;
+  id: number | null;
+  name: string | null;
+  image: string | null;
+  bio: string | null;
+} | null;
+// Variable: USER_BY_ID_QUERY
+// Query: *[_type == "author" && _id == $id][0] {    _id,    id,    name,    image,    bio  }
+export type USER_BY_ID_QUERYResult = {
   _id: string;
   id: number | null;
   name: string | null;
@@ -271,8 +281,9 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type == \"startup\" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] | order(_createdAt desc) {\n    _id,\n    title,\n    image,\n    slug,\n    description,\n    category,\n    _createdAt,\n    _type,\n    _updatedAt,\n    _rev,\n    \"author\": author->{\n      _id, \n      name, \n      image, \n      bio\n    },\n    views\n  }\n": STARTUP_QUERYResult;
-    "\n  *[_type == \"startup\" && _id == $id][0] {\n    _id,\n    title,\n    image,\n    slug,\n    description,\n    category,\n    _createdAt,\n    \"author\": author->{\n      _id, \n      name, \n      image, \n      bio\n    },\n    views,\n    pitch\n  }\n": FIND_BY_ID_QUERYResult;
+    "\n  *[_type == \"startup\" && _id == $id][0] {\n    _id,\n    title,\n    image,\n    slug,\n    description,\n    category,\n    _createdAt,\n    \"author\": author->{\n      _id, \n      name, \n      image, \n      bio,username\n    },\n    views,\n    pitch\n  }\n": FIND_BY_ID_QUERYResult;
     "\n  *[_type == \"startup\" && _id == $id][0] {\n    _id,\n    views\n  }\n": STARTUP_VIEW_QUERYResult;
-    "\n  *[_type == \"author\" && _id == $id][0] {\n    _id,\n    id,\n    name,\n    image,\n    bio\n  }\n": Author_BY_GITHUB_QUERYResult;
+    "\n  *[_type == \"author\" && id == $id][0] {\n    _id,\n    id,\n    name,\n    image,\n    bio\n  }\n": Author_BY_GITHUB_QUERYResult;
+    "\n  *[_type == \"author\" && _id == $id][0] {\n    _id,\n    id,\n    name,\n    image,\n    bio\n  }\n": USER_BY_ID_QUERYResult;
   }
 }

@@ -10,7 +10,8 @@ import { Button } from "./ui/button";
 import { Startup, Author } from "@/sanity.types";
 
 // ** Utils
-import { dateFormat } from "@/lib/utils";
+import { cn, dateFormat } from "@/lib/utils";
+import { Skeleton } from "./ui/skeleton";
 
 // ** Types
 export type StartupsCardType = Omit<Startup, "author"> & {
@@ -68,7 +69,7 @@ const StartupCard = ({ post }: { post: StartupsCardType }) => {
       </div>
 
       <Link href={`/startup/${_id}`}>
-        <p className="startup-card_des">{description}</p>
+        <p className="startup-card_desc">{description}</p>
         <Image
           src={image || "/default-image.png"}
           alt="placeholder"
@@ -91,3 +92,13 @@ const StartupCard = ({ post }: { post: StartupsCardType }) => {
 };
 
 export default StartupCard;
+
+export const StartupCardSkeleton = () => (
+  <>
+    {Array.from({ length: 5 }).map((_, i) => (
+      <li key={cn("skeleton", i)}>
+        <Skeleton key={i} className="startup-card_skeleton" />
+      </li>
+    ))}
+  </>
+);

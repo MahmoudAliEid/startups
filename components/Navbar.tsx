@@ -1,6 +1,8 @@
 import { auth, signOut, signIn } from "@/auth";
+import { BadgePlus, LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const Navbar = async () => {
   const session = await auth();
@@ -18,15 +20,28 @@ const Navbar = async () => {
         transition: "backdrop-filter 0.2s ease-in-out",
       }}
     >
-      <nav className="flex justify-between items-center">
+      <nav className="flex justify-between items-center ">
         <Link href="/">
           <Image src="/logo.png" alt="logo" width={144} height={30} />
         </Link>
-        <div className="flex items-center gap-5 text-black font-bold">
+        <div className="flex items-center gap-5 text-black  font-work-sans ">
           {session && session.user ? (
             <>
               <Link href={"/startup/create"}>
-                <span>Create</span>
+                <span
+                  className="
+                    cursor-pointer
+                    hover:bg-primary-100 
+                    hover:text-white
+                    transition-all
+                    duration-200
+                    px-4 py-2 rounded-lg
+                    max-sm:hidden
+                "
+                >
+                  Create
+                </span>
+                <BadgePlus className="sm:hidden size-6 text-primary" />
               </Link>
               <form
                 action={async () => {
@@ -35,31 +50,50 @@ const Navbar = async () => {
                 }}
               >
                 <button type="submit">
-                  <span>Log Out</span>
+                  <span
+                    className="  cursor-pointer
+                    hover:bg-primary-100 
+                    hover:text-white
+                    transition-all
+                    duration-200
+                    px-4 py-2 rounded-lg
+                    max-sm:hidden"
+                  >
+                    Logout
+                  </span>
+                  <LogOut className="sm:hidden size-6 text-red-600" />
                 </button>
               </form>
-              <div>
-                <Image
-                  src={session.user.image || "/default-user.png"}
-                  alt="user"
-                  width={38}
-                  height={38}
-                  className="avatar"
-                />
-              </div>
+
               <Link href={`user/${session?.user?.id}`}>
-                <span>{session?.user?.name}</span>
+                <Avatar className="size-10">
+                  <AvatarImage
+                    src={session?.user?.image}
+                    alt={session?.user?.name}
+                  />
+                  <AvatarFallback>{session?.user?.name[0]}</AvatarFallback>
+                </Avatar>
               </Link>
             </>
           ) : (
             <>
               <form
                 action={async () => {
-                  "use server"; // Server action to handle sign-in.
+                  "use server";
                   await signIn("github");
                 }}
               >
-                <button type="submit">
+                <button
+                  type="submit"
+                  className="
+                    cursor-pointer
+                    hover:bg-primary-100 
+                    hover:text-white
+                    transition-all
+                    duration-200
+                    px-4 py-2 rounded-lg
+                "
+                >
                   <span>Sign In</span>
                 </button>
               </form>

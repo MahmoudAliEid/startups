@@ -1,14 +1,14 @@
 import Heading from "@/components/Heading";
 import { dateFormat } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
-import { FIND_BY_ID_QUERY } from "@/sanity/lib/queries";
+import { FIND_BY_ID_QUERY, PLAYLIST_BY_SLUG_QUERY } from "@/sanity/lib/queries";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React, { Suspense } from "react";
 
 import markdownit from "markdown-it";
-import { StartupsCardType } from "@/components/StartupCard";
+import StartupCard, { StartupsCardType } from "@/components/StartupCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import View from "@/components/View";
 
@@ -21,11 +21,14 @@ const md = markdownit();
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params)?.id;
-  console.log(id);
 
-  const post = (await client.fetch(FIND_BY_ID_QUERY, {
-    id,
-  })) as unknown as StartupsCardType;
+  // make a parallel request to fetch the post
+  const [post, { select: editorSelectedStartups }] = await Promise.all([
+    client.fetch(FIND_BY_ID_QUERY, {
+      id,
+    }) as unknown as StartupsCardType,
+    client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: "editor-picks-startups" }),
+  ]);
 
   if (!id) {
     return notFound();
@@ -41,15 +44,15 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         <p className="sub-heading !max-w-5xl">{post?.description}</p>
       </section>
       <section className="section_container">
-        <Image
-          src={post?.image || "/images/placeholder.png"}
-          alt={post?.title || "Startup Image"}
-          layout="responsive"
-          width={250}
-          height={200}
-          className="rounded-xl w-full h-auto"
-        />
         <div className="space-y-5 mt-10 max-w-4xl mx-auto">
+          <Image
+            src={post?.image || "/images/placeholder.png"}
+            alt={post?.title || "Startup Image"}
+            width={250}
+            layout="responsive"
+            height={100}
+            className="rounded-xl !w-full h-full object-cover"
+          />
           <div className="flex-between gap-5">
             <Link
               href={`user/${post?.author?.id}`}
@@ -82,7 +85,16 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
           )}
         </div>
         <hr className="divider mt-10" />
-        {/* TODO: editor selected startups */}
+        {editorSelectedStartups && editorSelectedStartups.length > 0 && (
+          <div className="max-w">
+            <p className="editor-heading">{`Editor's Picks`}</p>
+            <ul className="card_grid-sm mt-7">
+              {editorSelectedStartups.map((startup: StartupsCardType) => (
+                <StartupCard key={startup._id} post={startup} />
+              ))}
+            </ul>
+          </div>
+        )}
         <Suspense fallback={<Skeleton className="view_skeleton" />}>
           <View id={id} />
         </Suspense>

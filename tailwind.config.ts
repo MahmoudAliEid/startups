@@ -15,10 +15,13 @@ const config: Config = {
       },
       colors: {
         primary: {
-          "100": "rgba(3, 195, 236,0.3)",
+          "100": "rgba(3, 195, 236,0.4567)",
           DEFAULT: "#03c3ec",
         },
-        secondary: "#FBE843",
+        secondary: {
+          "100": "rgba(251, 232, 67, .6)",
+          DEFAULT: "#fbe843",
+        },
         black: {
           "100": "#333333",
           "200": "#141413",

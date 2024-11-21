@@ -45,8 +45,11 @@ const StartupForm = () => {
       if (res.status === "success") {
         Notify({ message: "Startup created successfully", type: "success" });
         router.push(`/startup/${res?._id}`);
+        console.log(res);
 
         return { ...state, error: "", status: "success" };
+      } else {
+        Notify({ message: "Something went wrong", type: "error" });
       }
     } catch (error) {
       if (error instanceof z.ZodError) {

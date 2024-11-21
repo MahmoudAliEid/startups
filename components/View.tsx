@@ -4,6 +4,7 @@ import Ping from "./Ping";
 import { client } from "@/sanity/lib/client";
 import { STARTUP_VIEW_QUERY } from "@/sanity/lib/queries";
 import { writeClient } from "@/sanity/lib/write-client";
+import { EyeIcon } from "lucide-react";
 import { unstable_after as after } from "next/server";
 
 const View = async ({ id }: { id: string | "" }) => {
@@ -32,7 +33,10 @@ const View = async ({ id }: { id: string | "" }) => {
         <Ping />
       </div>
       <div className="view-text">
-        <span className="text-black">Views:{totalViews}</span>
+        <div className="flex gap-1.5">
+          <EyeIcon className="size-6" />
+          <span className="text-16-medium">{totalViews}</span>
+        </div>
       </div>
     </div>
   );
