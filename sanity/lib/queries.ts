@@ -70,7 +70,7 @@ export const USER_BY_ID_QUERY = defineQuery(`
 `);
 
 export const STARTUP_QUERY_BY_AUTHOR = defineQuery(`
-  *[_type == "startup" author._ref == $id] | order(_createdAt desc) {
+  *[_type == "startup" && author._ref == $id] | order(_createdAt desc) {
     _id,
     title,
     image,

@@ -22,7 +22,13 @@ export type StartupsCardType = Omit<Startup, "author"> & {
   views?: number | null;
 };
 
-const StartupCard = ({ post }: { post: StartupsCardType }) => {
+const StartupCard = ({
+  post,
+  href,
+}: {
+  post: StartupsCardType;
+  href: string;
+}) => {
   const {
     _id,
     _createdAt,
@@ -50,7 +56,7 @@ const StartupCard = ({ post }: { post: StartupsCardType }) => {
               <p className="text-16-medium  line-clamp-1">{author.name}</p>
             </Link>
           )}
-          <Link href={`/startup/${_id}`}>
+          <Link href={href || `/startup/${_id}`}>
             <h3 className="text-26-semibold line-clamp-2">{title}</h3>
           </Link>
         </div>
@@ -68,7 +74,7 @@ const StartupCard = ({ post }: { post: StartupsCardType }) => {
         )}
       </div>
 
-      <Link href={`/startup/${_id}`}>
+      <Link href={href || `/startup/${_id}`}>
         <p className="startup-card_desc">{description}</p>
         <Image
           src={image || "/default-image.png"}
@@ -84,7 +90,7 @@ const StartupCard = ({ post }: { post: StartupsCardType }) => {
           <p className="text-16-medium">{category}</p>
         </Link>
         <Button className="startup-card_btn" asChild>
-          <Link href={`startup/${post._id}`}>Details</Link>
+          <Link href={href || `startup/${post._id}`}>Details</Link>
         </Button>
       </div>
     </li>

@@ -30,6 +30,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params)?.id;
 
   // make a parallel request to fetch the post
+  //@ts-expect-error: this is a hack to make the types work
   const [post, { select: editorSelectedStartups }] = await Promise.all([
     client.fetch(FIND_BY_ID_QUERY, {
       id,
@@ -97,7 +98,11 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             <p className="editor-heading">{`Editor's Picks`}</p>
             <ul className="card_grid-sm mt-7">
               {editorSelectedStartups.map((startup: StartupsCardType) => (
-                <StartupCard key={startup._id} post={startup} />
+                <StartupCard
+                  key={startup._id}
+                  post={startup}
+                  href={`/${startup._id}`}
+                />
               ))}
             </ul>
           </div>
