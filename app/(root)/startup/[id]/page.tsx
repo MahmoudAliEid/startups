@@ -1,18 +1,25 @@
-import Heading from "@/components/Heading";
-import { dateFormat } from "@/lib/utils";
-import { client } from "@/sanity/lib/client";
-import { FIND_BY_ID_QUERY, PLAYLIST_BY_SLUG_QUERY } from "@/sanity/lib/queries";
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import React, { Suspense } from "react";
+import type { Metadata } from "next";
 
+// ** Utils
+import { dateFormat } from "@/lib/utils";
+// ** Sanity
+import { client } from "@/sanity/lib/client";
+import { FIND_BY_ID_QUERY, PLAYLIST_BY_SLUG_QUERY } from "@/sanity/lib/queries";
+
+// ** Third Party Components
 import markdownit from "markdown-it";
-import StartupCard, { StartupsCardType } from "@/components/StartupCard";
+
+// ** Custom Components
 import { Skeleton } from "@/components/ui/skeleton";
+import StartupCard, { StartupsCardType } from "@/components/StartupCard";
+import Heading from "@/components/Heading";
 import View from "@/components/View";
 
-export const meta = {
+export const metadata: Metadata = {
   title: "View Details",
   description: "View details of a startup",
 };
