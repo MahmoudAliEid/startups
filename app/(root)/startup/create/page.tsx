@@ -1,13 +1,14 @@
 import { auth } from "@/auth";
 import StartupForm from "@/components/StartupForm";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import React from "react";
 
-export const meta = {
-  title: "Submit your Startup",
-  description: "Submit your startup to get it listed on our platform",
+export const metadata: Metadata = {
+  title: "Submit Your Startup - Join Our Innovators' Platform",
+  description:
+    "Submit your startup for review and get featured on our platform to connect with investors and grow your business.",
 };
-
 const page = async () => {
   const session = await auth();
 

@@ -17,8 +17,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Startups",
-  description: "Directory of the new era of startups",
+  title: "Startups Directory - Discover Next-Gen Innovations",
+  description:
+    "Explore the ultimate directory of innovative startups driving the future of technology, business, and more.",
 };
 
 export default function RootLayout({

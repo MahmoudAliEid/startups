@@ -9,8 +9,15 @@ import Image from "next/image";
 
 import UserStartups from "@/components/UserStartups";
 import { StartupCardSkeleton } from "@/components/StartupCard";
+import { Metadata } from "next";
 
 export const experimental_ppr = true;
+
+export const metadata: Metadata = {
+  title: "User Profile - Manage Your Account & Preferences",
+  description:
+    "Access and manage your account details, update preferences, and view personalized recommendations on your user profile.",
+};
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;

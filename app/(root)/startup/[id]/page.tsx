@@ -20,10 +20,10 @@ import Heading from "@/components/Heading";
 import View from "@/components/View";
 
 export const metadata: Metadata = {
-  title: "View Details",
-  description: "View details of a startup",
+  title: "Startup Details - Explore Innovative Businesses",
+  description:
+    "Discover detailed insights and key features of groundbreaking startups revolutionizing industries.",
 };
-
 const md = markdownit();
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {

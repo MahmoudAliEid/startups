@@ -27,7 +27,7 @@ const StartupCard = ({
   href,
 }: {
   post: StartupsCardType;
-  href: string;
+  href?: string;
 }) => {
   const {
     _id,
