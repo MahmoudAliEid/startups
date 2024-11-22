@@ -8,6 +8,7 @@ const UserStartups = async ({ id }: { id: string }) => {
   return (
     <>
       {userStartups && userStartups.length > 0 ? (
+        // @ts-expect-error: this is a hack to make the types work
         userStartups.map((startup: StartupsCardType) => (
           <StartupCard key={startup._id} post={startup} />
         ))

@@ -18,6 +18,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import StartupCard, { StartupsCardType } from "@/components/StartupCard";
 import Heading from "@/components/Heading";
 import View from "@/components/View";
+import { Button } from "@/components/ui/button";
+import { EditIcon } from "lucide-react";
+import { auth } from "@/auth";
+import Delete from "@/components/Delete";
 
 export const metadata: Metadata = {
   title: "Startup Details - Explore Innovative Businesses",
@@ -28,6 +32,8 @@ const md = markdownit();
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params)?.id;
+
+  const session = await auth();
 
   // make a parallel request to fetch the post
   //@ts-expect-error: this is a hack to make the types work
@@ -61,9 +67,21 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             height={100}
             className="rounded-xl !w-full h-full object-cover"
           />
+          {session?.id === post?.author?._id && (
+            <div className="flex-between mt-3 gap-3">
+              <Button className="startup-card_btn" asChild>
+                <Link href={`/startup/${id}/edit`}>
+                  <EditIcon className="size-6" />
+                  Edit
+                </Link>
+              </Button>
+              <Delete title={post?.title || ""} id={id} />
+            </div>
+          )}
+
           <div className="flex-between gap-5">
             <Link
-              href={`user/${post?.author?.id}`}
+              href={`/user/${post?.author?._id}`}
               className="flex gap-2 items-center mb-3"
             >
               <Image
@@ -98,11 +116,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             <p className="editor-heading">{`Editor's Picks`}</p>
             <ul className="card_grid-sm mt-7">
               {editorSelectedStartups.map((startup: StartupsCardType) => (
-                <StartupCard
-                  key={startup._id}
-                  post={startup}
-                  href={`startup/${startup._id}`}
-                />
+                <StartupCard key={startup._id} post={startup} />
               ))}
             </ul>
           </div>

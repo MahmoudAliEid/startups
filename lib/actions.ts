@@ -55,3 +55,79 @@ export const createPitch = async (
     });
   }
 };
+export const editPitch = async (
+  state: { [key: string]: string | number | boolean },
+  form: FormData,
+  pitch: string,
+  id: string
+) => {
+  const session = await auth();
+
+  if (!session)
+    return parseServerActionResponse({
+      error: "Unauthorized",
+      status: "error",
+    });
+
+  const { title, category, description, link } = Object.fromEntries(
+    Array.from(form).filter(([key]) => key !== "pitch")
+  );
+
+  const slug = slugify(title as string, { lower: true, strict: true });
+
+  try {
+    const startup = {
+      title,
+      category,
+      description,
+      image: link,
+      pitch,
+      slug: {
+        _type: "slug",
+        current: slug,
+      },
+      author: {
+        _type: "reference",
+        _ref: session.id,
+      },
+    };
+    const res = await writeClient.patch(id).set(startup).commit();
+
+    return parseServerActionResponse({
+      ...res,
+      error: "",
+      status: "success",
+    });
+  } catch (error) {
+    console.error(error);
+    return parseServerActionResponse({
+      error: JSON.stringify(error),
+      status: "error",
+    });
+  }
+};
+export const deleteStartup = async (id: string) => {
+  const session = await auth();
+
+  if (!session)
+    return parseServerActionResponse({
+      error: "Unauthorized",
+      status: "error",
+    });
+
+  try {
+    const res = await writeClient.delete(id);
+
+    return parseServerActionResponse({
+      ...res,
+      error: "",
+      status: "success",
+    });
+  } catch (error) {
+    console.error(error);
+    return parseServerActionResponse({
+      error: JSON.stringify(error),
+      status: "error",
+    });
+  }
+};

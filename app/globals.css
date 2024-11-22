@@ -154,6 +154,9 @@
   .startup-card_btn {
     @apply rounded-full bg-black-200 font-medium text-[16px] text-white px-5 py-3 !important;
   }
+  .startup-card_delete {
+    @apply rounded-full bg-red-600 font-medium text-[16px] text-white px-5 py-3 cursor-pointer !important;
+  }
 
   .startup-card_skeleton {
     @apply w-full h-96 rounded-[22px] bg-zinc-400;
@@ -187,6 +190,15 @@
   .startup-form_btn {
     @apply bg-primary border-[4px] border-black rounded-full p-5 min-h-[70px] w-full font-bold text-[18px] !important;
   }
+  .startup-form_delete {
+    @apply bg-red-700 border-[4px] border-black rounded-full p-5 min-h-[70px] w-full font-bold text-[18px] !important;
+  }
+  .dialog_btn {
+    @apply bg-primary border-[3px] hover:bg-primary-100 border-black rounded-full p-2 min-h-[30px] w-full font-bold text-[14px] m-1 !important;
+  }
+  .dialog_delete {
+    @apply bg-red-700 border-[3px] hover:bg-red-400 border-black rounded-full p-2 min-h-[30px] w-full font-bold text-[14px] m-1 !important;
+  }
 
   /* view */
   .view-container {
@@ -201,7 +213,7 @@
     @apply font-medium text-[16px] bg-primary-100 px-4 py-2 rounded-full;
   }
 
- .pattern {
+  .pattern {
     background-image: linear-gradient(
       to right,
       transparent 49.5%,
@@ -212,12 +224,7 @@
     background-size: 5% 100%;
     background-position: center;
     background-repeat: repeat-x;
-    
   }
-
-
-
-
 
   .tag-tri {
     @apply before:content-[''] before:absolute before:top-2 before:left-2 before:border-t-[10px] before:border-t-black before:border-r-[10px] before:border-r-transparent after:content-[''] after:absolute after:bottom-2 after:right-2 after:border-b-[10px] after:border-b-black after:border-l-[10px] after:border-l-transparent;

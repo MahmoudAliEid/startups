@@ -90,7 +90,7 @@ const StartupCard = ({
           <p className="text-16-medium">{category}</p>
         </Link>
         <Button className="startup-card_btn" asChild>
-          <Link href={href || `startup/${post._id}`}>Details</Link>
+          <Link href={href || `/startup/${post._id}`}>Details</Link>
         </Button>
       </div>
     </li>
